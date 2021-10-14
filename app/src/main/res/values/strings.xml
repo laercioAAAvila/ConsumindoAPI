@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ConsumindoAPI</string>
+    <string name="cep_placeholder">00000000</string>
+    <string name="imageView_logo">IMAGE LOGO</string>
+    <string name="button_find">BUSCAR</string>
+    <string name="textViewResult">Null</string>
 </resources>
