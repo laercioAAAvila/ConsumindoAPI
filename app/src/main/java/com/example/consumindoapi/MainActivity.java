@@ -9,10 +9,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button buttonFind;
-    private TextView textViewResult;
+    private TextView textViewCep, textViewStreet, textViewCity, textViewState;
     private EditText editTextCep;
 
     @Override
@@ -21,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         buttonFind = (Button) findViewById(R.id.button);
-        textViewResult = (TextView) findViewById(R.id.textViewResult);
+        textViewCep = (TextView) findViewById(R.id.textViewCEP);
         editTextCep = (EditText) findViewById(R.id.inputCEP);
         buttonFind.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,7 +48,33 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            textViewResult.setText(s);
+            try {
+                String string1 = s.toString();
+                string1 = string1.replace("{","");
+                string1 = string1.replace("}","");
+                string1 = string1.replace("-","");
+                string1 = string1.replace("\"","");
+                string1 = string1.replace(",","");
+                String strings2[] = string1.split(":");
+                endereco(strings2);
+                /*for(int i = 0;i < strings2.length;i++) {
+                    System.out.print(strings2[i]);
+                }*/
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            textViewCep.setText(s);
+        }
+
+        private String[] endereco (String[] s) {
+            String antigoEndereco[] = s;
+            for (int i = 0; i < antigoEndereco.length; i++){
+                if (antigoEndereco[i] == "cep"){
+                    antigoEndereco[i] = "Sem Informação";
+                }if (antigoEndereco[i] == "");
+            }
+            return antigoEndereco;
         }
     }
 }
