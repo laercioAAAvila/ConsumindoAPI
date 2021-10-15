@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private class Tarefa extends AsyncTask<String, String, String> {
+        private String cep, logradouro, bairro, localidade, uf;
+        private ArrayList<String> endereco = new ArrayList<>();
 
         @Override
         protected String doInBackground(String... strings) {
@@ -53,39 +55,53 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             try {
-                endereco(s);
+                enderecoResult(s);
+
+
             }catch (Exception e){
                 e.printStackTrace();
+            }finally {
+                textViewCep.setText(endereco.get(0));
+                textViewStreet.setText(endereco.get(1));
+                textViewDistrict.setText(endereco.get(2));
+                textViewCity.setText(endereco.get(3));
+                textViewState.setText(endereco.get(4));
             }
-            textViewCep.setText(s);
         }
 
-        private String[] endereco (String s) {
+        private ArrayList<String> enderecoResult (String s) {
             String reformula = s.toString();
             reformula = reformula.replace("{","");
             reformula = reformula.replace("}","");
             reformula = reformula.replace("-","");
             reformula = reformula.replace("\"","");
             reformula = reformula.replace(" ", "");
-            reformula = reformula.replace(":,", ": Sem informação,");
+            reformula = reformula.replace(":,", ": S/informação,");
             reformula = reformula.replace(":", ": ");
             //======================================================
-            String vetorString[], cep, logradouro, bairro, localidade, uf, endereco[] = new String[5];
+            String vetorString[];
 
             vetorString = reformula.split(",");
 
-            cep = vetorString[0];
-            logradouro = vetorString[1];
-            bairro = vetorString[3];
-            localidade = vetorString[4];
-            uf = vetorString[5];
+            this.cep = vetorString[0];
+            this.logradouro = vetorString[1];
+            this.bairro = vetorString[3];
+            this.localidade = vetorString[4];
+            this.uf = vetorString[5];
 
-            endereco[0]= cep.replace("cep: ", "");
-            endereco[1]= logradouro.replace("logradouro: ", "");
-            endereco[2]= bairro.replace("bairro: ", "");
-            endereco[3]= localidade.replace("localidade: ", "");
-            endereco[4]= uf.replace("uf: ", "");
+            this.cep = cep.replace("cep: ", "");
+            this.logradouro = logradouro.replace("logradouro: ", "");
+            this.logradouro = logradouro.replace(" ", "");
+            this.bairro = bairro.replace("bairro: ", "");
+            this.bairro = bairro.replace(" ", "");
+            this.localidade = localidade.replace("localidade: ", "");
+            this.uf = uf.replace("uf: ", "");
 
+            this.endereco.add(cep);
+            this.endereco.add(logradouro);
+            this.endereco.add(bairro);
+            this.endereco.add(localidade);
+            this.endereco.add(uf);
             /*
             endereco[0]= cep;
             endereco[1]= logradouro;

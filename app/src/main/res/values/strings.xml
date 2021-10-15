@@ -1,6 +1,12 @@
 <resources>
-    <string name="app_name">ConsumindoAPI</string>
+    <string name="app_name">Busca por CEP</string>
     <string name="cep_placeholder">00000000</string>
     <string name="imageView_logo">IMAGE LOGO</string>
     <string name="button_find">BUSCAR</string>
+
+    <string name="textViewCEPTitle">CEP:</string>
+    <string name="textViewStreetTitle">LOGRADOURO:</string>
+    <string name="textViewDistrictTitle">BAIRRO:</string>
+    <string name="textViewCityTitle">CIDADE:</string>
+    <string name="textViewStateTitle">UF:</string>
 </resources>
